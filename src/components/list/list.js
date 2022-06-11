@@ -25,14 +25,33 @@ export function List() {
 //     });
 // }
 
-const [setFilter, filter] = useState(null)
-const todos = useQuery(query('todos').orderByDesc('createdAt').where('complete', filter));
-const visibleTodos = todos
+const filter = useQuery(query('filters'))
+
+const modified = query('todos').orderByDesc('createdAt')
+
+// const todos = useQuery(filter == null? modified: modified.where('complete', search))
+ 
+const todos = useQuery(modified)
+console.log(todos, 'should show')
+if (todos === null || filter === null) {
+  return <div></div>;
+}
+let search
+switch(filter[0].value){
+  case 'all':
+    search = null
+  case "completed":
+    search = false
+  case 'active':
+    search = true
+}
+console.log('todos', todos)
 const areAllCompleted = todos.length && todos.every(todo => todo.completed)
 const todoIds = [ todos ].map(todo => todo.id)
 const completeAll = async ()=>await updateRecords('todos', todoIds, { completed: true })
 const update = async todo =>await updateRecord('todos', todo.id, todo)
 const remove = async id => await deleteRecord('todos', id)
+
   return (
     <section className="main">
       <input id="toggle-all" className="toggle-all" type="checkbox" checked={areAllCompleted} readOnly />

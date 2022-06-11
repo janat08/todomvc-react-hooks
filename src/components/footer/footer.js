@@ -14,12 +14,16 @@ export function Footer() {
     { key: FILTERS.completed, value: 'Completed' }
   ];
   const todos = useQuery(query('todos').orderByDesc('createdAt'))
-  const useTodos = fn=> fn(todos)
-
-  const completedCount = useTodos(state => selectCompleted(state.todos).length);
-  const itemsLeft = useTodos(state => selectNotCompleted(state.todos).length);
-  // const filter = useSelector(state => state.filter);
   const filter = useQuery(query('filters'))
+  if (todos === null || filter === null){
+    return <span></span>
+  }
+  const doTodos = fn=> fn(todos)
+
+  const completedCount = doTodos(state => selectCompleted(state.todos).length);
+  const itemsLeft = doTodos(state => selectNotCompleted(state.todos).length);
+  // const filter = useSelector(state => state.filter);
+  
   const clearCompleted = async ()=> await deleteRecords('todos', todos.filter(x=>x.completed).map(x=>x.id));
   // const clearCompleted = () => dispatch(onClearCompleted());
   

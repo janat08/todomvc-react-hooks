@@ -13,11 +13,12 @@ tasks:
       printf 'y' | npx cypress install --force
       npx cypress verify
       npx cypress info
+      npm run test:e2e
   - name: Install and run dev server
     init: |
       npm install
       gp sync-done install
-    command: npm run dev
+    command: npm run start
     openMode: tab-after
     
 ports:
