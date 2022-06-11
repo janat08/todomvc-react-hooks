@@ -4,6 +4,8 @@ import { FILTERS } from '../../constants/filter';
 import { selectCompleted, selectNotCompleted } from '../../store/selectors/todo';
 import { onClearCompleted } from '../../store/actions/todo';
 import { onFilterSelect } from '../../store/actions/filter';
+import { useQuery } from 'thin-backend-react';
+import { deleteRecords, deleteRecord, updateRecords, updateRecord, query } from 'thin-backend';
 
 export function Footer() {
   const filterTitles = [
@@ -11,13 +13,18 @@ export function Footer() {
     { key: FILTERS.active, value: 'Active' },
     { key: FILTERS.completed, value: 'Completed' }
   ];
-  const dispatch = useDispatch();
-  const completedCount = useSelector(state => selectCompleted(state.todos).length);
-  const itemsLeft = useSelector(state => selectNotCompleted(state.todos).length);
-  const filter = useSelector(state => state.filter);
-  const clearCompleted = () => dispatch(onClearCompleted());
-  const filterSelect = selectedFilter => dispatch(onFilterSelect(selectedFilter));
+  const todos = useQuery(query('todos').orderByDesc('createdAt'))
+  const useTodos = fn=> fn(todos)
 
+  const completedCount = useTodos(state => selectCompleted(state.todos).length);
+  const itemsLeft = useTodos(state => selectNotCompleted(state.todos).length);
+  // const filter = useSelector(state => state.filter);
+  const filter = useQuery(query('filters'))
+  const clearCompleted = async ()=> await deleteRecords('todos', todos.filter(x=>x.completed).map(x=>x.id));
+  // const clearCompleted = () => dispatch(onClearCompleted());
+  
+  // const filterSelect = selectedFilter => dispatch(onFilterSelect(selectedFilter));
+  const filterSelect = async value => await updateRecord('filters',filter[0].id, { value });;
   const itemText = itemsLeft === 1 ? 'item' : 'items';
 
   return (
@@ -31,7 +38,7 @@ export function Footer() {
           <li key={filterTitle.key}>
             <a
               href="./#"
-              className={classNames({ selected: filterTitle.key === filter })}
+              className={classNames({ selected: filterTitle.key === filter[0].value })}
               onClick={() => filterSelect(filterTitle.key)}
             >
               {filterTitle.value}

@@ -1,0 +1,27 @@
+image:
+    file: .gitpod.Dockerfile
+
+vscode:
+  extensions:
+    - runem.lit-plugin
+    - tabnine.tabnine-vscode
+    - eamodio.gitlens
+tasks:
+  - name: Open cypress
+    command: |
+      gp sync-await install
+      printf 'y' | npx cypress install --force
+      npx cypress verify
+      npx cypress info
+  - name: Install and run dev server
+    init: |
+      npm install
+      gp sync-done install
+    command: npm run dev
+    openMode: tab-after
+    
+ports:
+  - port: 9300
+    onOpen: open-preview
+  - port: 6080
+    onOpen: open-browser

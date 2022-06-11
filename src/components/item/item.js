@@ -15,6 +15,7 @@ export function Item({ todo, onUpdate, onRemove }) {
     setEditing(false);
   };
 
+
   const { completed } = todo;
 
   return (
