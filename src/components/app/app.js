@@ -28,7 +28,7 @@ export function App() {
    
   const todos = useQuery(modified)
   const show = !!todos && !!todos.length
-  console.log(show, todos, 123)
+  
   return (
     <div id="app">
       <section className="todoapp">

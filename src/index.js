@@ -9,16 +9,16 @@ import { ThinBackend } from 'thin-backend-react';
 // This needs to be run before any calls to `query`, `createRecord`, etc.
 initThinBackend({
   // This url is different for each backend, you can find the backend url in the project documentation
-  host: 'https://todomvc-example.thinbackend.app'
+  host: 'https://todos-new.thinbackend.app'
 });
 
 
 const container = document.querySelector('app-root');
 const root = createRoot(container);
 root.render(
-  <Provider store={createStore()}>
     <ThinBackend>
+  <Provider store={createStore()}>
     <App />
-    </ThinBackend>
   </Provider>
+    </ThinBackend>
 );

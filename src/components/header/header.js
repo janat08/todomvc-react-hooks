@@ -5,7 +5,7 @@ const ENTER_KEY = 'Enter';
 
 export function Header() {
   const [name, setName] = useState('');
-  console.log('header running')
+  
   const handleChange = event => setName(event.target.value);
 
   const handleSubmit = async event => {

@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { deleteRecord, updateRecords, updateRecord, query } from 'thin-backend';
 import { useQuery } from 'thin-backend-react';
 import {useState} from 'react'
+
+
 export function List() {
   // const dispatch = useDispatch();
   // useEffect(()=>{
@@ -26,28 +28,32 @@ export function List() {
 // }
 
 const filter = useQuery(query('filters'))
+let search = null
+if (filter !== null){
+  switch(filter[0].value){
+    case 'all':
+      search = null; break;
+    case "completed":
+      search = true; break;
+    case 'active':
+      search = false; break;
+  }
+}
 
-const modified = query('todos').orderByDesc('createdAt')
+let todoQ = query('todos').orderByDesc('createdAt')
+if (filter !== null && search !== null){
+  todoQ = todoQ.where('completed', search)
+}
 
-// const todos = useQuery(filter == null? modified: modified.where('complete', search))
- 
-const todos = useQuery(modified)
-console.log(todos, 'should show')
-if (todos === null || filter === null) {
+const todos = useQuery(todoQ)
+
+if (filter === null || todos === null) {
   return <div></div>;
 }
-let search
-switch(filter[0].value){
-  case 'all':
-    search = null
-  case "completed":
-    search = false
-  case 'active':
-    search = true
-}
-console.log('todos', todos)
+
 const areAllCompleted = todos.length && todos.every(todo => todo.completed)
-const todoIds = [ todos ].map(todo => todo.id)
+const todoIds = todos.map(todo => todo.id)
+
 const completeAll = async ()=>await updateRecords('todos', todoIds, { completed: true })
 const update = async todo =>await updateRecord('todos', todo.id, todo)
 const remove = async id => await deleteRecord('todos', id)

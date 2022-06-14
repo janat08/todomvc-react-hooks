@@ -18,7 +18,7 @@ export function Footer() {
   if (todos === null || filter === null){
     return <span></span>
   }
-  const doTodos = fn=> fn(todos)
+  const doTodos = fn=> fn({todos})
 
   const completedCount = doTodos(state => selectCompleted(state.todos).length);
   const itemsLeft = doTodos(state => selectNotCompleted(state.todos).length);
