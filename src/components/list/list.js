@@ -4,7 +4,7 @@ import { selectVisible } from '../../store/selectors/todo';
 import { onUpdate, onRemove, onCompleteAll } from '../../store/actions/todo';
 import { useEffect } from 'react';
 import { deleteRecord, updateRecords, updateRecord, query } from 'thin-backend';
-import { useQuery } from 'thin-backend-react';
+import { useQuery, useQuerySingleResult } from 'thin-backend-react';
 import {useState} from 'react'
 
 
@@ -27,10 +27,10 @@ export function List() {
 //     });
 // }
 
-const filter = useQuery(query('filters'))
+const filter = useQuerySingleResult(query('filters'))
 let search = null
 if (filter !== null){
-  switch(filter[0].value){
+  switch(filter.value){
     case 'all':
       search = null; break;
     case "completed":
@@ -40,7 +40,7 @@ if (filter !== null){
   }
 }
 
-let todoQ = query('todos').orderByDesc('createdAt')
+let todoQ = query('todos').orderBy('completed')
 if (filter !== null && search !== null){
   todoQ = todoQ.where('completed', search)
 }
