@@ -40,7 +40,7 @@ if (filter !== null){
   }
 }
 
-let todoQ = query('todos').orderBy('completed').orderBy('createdAt')
+let todoQ = query('todos').orderBy('completed')
 if (filter !== null && search !== null){
   todoQ = todoQ.where('completed', search)
 }

@@ -6,8 +6,8 @@
     "url": "git+https://github.com/blacksonic/todomvc-react-hooks.git"
   },
   "scripts": {
-    "start": "PORT=9300 BROWSER=none react-scripts start",
-    "build": "CI=false react-scripts build",
+    "start": "cross-env PORT=9300 BROWSER=none react-scripts start",
+    "build": "cross-env CI=false react-scripts build",
     "format": "prettier --write 'src/**/*.{js,jsx}'",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "test": "npm run test:unit",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "classnames": "^2.3.1",
+    "cross-env": "^7.0.3",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
