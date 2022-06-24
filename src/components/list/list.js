@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { deleteRecord, updateRecords, updateRecord, query } from 'thin-backend';
 import { useQuery, useQuerySingleResult } from 'thin-backend-react';
 import {useState} from 'react'
-
+import { NewRecordBehaviour } from 'thin-backend';
 
 export function List() {
   // const dispatch = useDispatch();
@@ -45,7 +45,9 @@ if (filter !== null && search !== null){
   todoQ = todoQ.where('completed', search)
 }
 
-const todos = useQuery(todoQ)
+const todos = useQuery(todoQ, {
+  newRecordBehaviour: NewRecordBehaviour.PREPEND_NEW_RECORD
+})
 
 if (filter === null || todos === null) {
   return <div></div>;

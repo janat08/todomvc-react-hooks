@@ -24,8 +24,8 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "redux": "^4.1.2",
-    "thin-backend": "^0.10.0",
-    "thin-backend-react": "^0.10.0",
+    "thin-backend": "^0.10.3",
+    "thin-backend-react": "^0.10.1",
     "todomvc-app-css": "^2.4.2",
     "uuid": "^8.3.2"
   },
