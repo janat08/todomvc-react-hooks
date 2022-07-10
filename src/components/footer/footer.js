@@ -6,9 +6,9 @@ import { deleteRecords, updateRecord, query } from 'thin-backend';
 
 export function Footer() {
   const filterTitles = [
-    { key: FILTERS.all, value: 'All' },
-    { key: FILTERS.active, value: 'Active' },
-    { key: FILTERS.completed, value: 'Completed' }
+    { key: "all", value: 'All' },
+    { key: "active", value: 'Active' },
+    { key: "completed", value: 'Completed' }
   ];
   const todos = useQuery(query('todos').orderByDesc('createdAt'))
   const filter = useQuerySingleResult(query('filters'))
