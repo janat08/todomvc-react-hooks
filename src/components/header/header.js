@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createRecord, deleteRecord, updateRecords, updateRecord } from 'thin-backend';
+import { createRecord } from 'thin-backend';
 
 const ENTER_KEY = 'Enter';
 

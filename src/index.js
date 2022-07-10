@@ -1,7 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import 'todomvc-app-css/index.css';
-import { Provider } from 'react-redux';
-import { createStore } from './store';
 import { App } from './components/app/app';
 import { initThinBackend } from 'thin-backend';
 import { ThinBackend } from 'thin-backend-react';
@@ -17,8 +15,6 @@ const container = document.querySelector('app-root');
 const root = createRoot(container);
 root.render(
     <ThinBackend>
-  <Provider store={createStore()}>
     <App />
-  </Provider>
     </ThinBackend>
 );
