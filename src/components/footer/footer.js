@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { FILTERS } from '../../constants/filter';
 import { selectCompleted, selectNotCompleted } from '../../store/selectors/todo';
 import { useQuery, useQuerySingleResult } from 'thin-backend-react';
 import { deleteRecords, updateRecord, query } from 'thin-backend';
